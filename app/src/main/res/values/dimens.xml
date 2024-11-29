@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Typical text sizes -->
+    <dimen name="text_size_xsmall">12sp</dimen> <!-- Extra small text -->
+    <dimen name="text_size_small">14sp</dimen> <!-- Small text -->
+    <dimen name="text_size_normal">16sp</dimen> <!-- Normal text -->
+    <dimen name="text_size_large">18sp</dimen> <!-- Large text -->
+    <dimen name="text_size_xlarge">20sp</dimen> <!-- Extra large text -->
+    <dimen name="text_size_xxlarge">24sp</dimen> <!-- Headings -->
+    <dimen name="text_size_huge">32sp</dimen> <!-- Very large headings -->
+
+    <!-- Padding sizes -->
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_normal">8dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_xlarge">24dp</dimen>
+
+    <!-- Margin sizes -->
+    <dimen name="margin_zero">0dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_normal">8dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_xlarge">24dp</dimen>
+    <dimen name="margin_xxlarge">32dp</dimen>
+    <dimen name="margin_xxxlarge">42dp</dimen>
+
+</resources>

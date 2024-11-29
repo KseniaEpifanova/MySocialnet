@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MySocialnet</string>
+    <string name="invalid_email_address">invalid_email_address</string>
+    <string name="password_must_be_6_12_characters">password_limit</string>
+    <string name="login">login</string>
+    <string name="login_uppercase">Login</string>
+    <string name="register">register</string>
+    <string name="password">password</string>
+    <string name="email">email</string>
 </resources>
