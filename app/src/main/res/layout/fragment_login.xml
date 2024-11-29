@@ -9,8 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/ScreenBackground"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/padding_large">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/headerText"
