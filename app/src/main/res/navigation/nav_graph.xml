@@ -15,5 +15,6 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.mysocialnet.features.register.RegisterFragment"
-        android:label="Register" />
+        android:label="Register" >
+    </fragment>
 </navigation>
