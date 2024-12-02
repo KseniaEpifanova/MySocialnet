@@ -5,12 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.mysocialnet.MySocialNetApp
+import com.example.mysocialnet.R
 import com.example.mysocialnet.databinding.FragmentRegisterBinding
+import com.example.mysocialnet.models.UserModel
+import com.example.mysocialnet.utils.Errors
+import javax.inject.Inject
 
 class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var viewModelInjectionFactory: ViewModelProvider.Factory
+    private lateinit var registerViewModel: RegisterViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,54 +31,85 @@ class RegisterFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        (requireActivity().application as MySocialNetApp).dispatchingAndroidInjector.inject(this)//.appComponent.inject(this)
+
+        registerViewModel =
+            ViewModelProvider(this, viewModelInjectionFactory).get(RegisterViewModel::class.java)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.registerButton.setOnClickListener {
-            val name = binding.nameInput.text.toString()
-            val email = binding.emailInput.text.toString()
-            val password = binding.passwordInput.text.toString()
-            val confirmPassword = binding.confirmPasswordInput.text.toString()
+        registerViewModel.fieldErrors.observe(viewLifecycleOwner, Observer { errors ->
+            displayValidationErrors(errors)
+        })
+        registerViewModel.isRegistered.observe(viewLifecycleOwner, Observer { isRegistered ->
+            if (isRegistered) {
 
-            if (validateInput(name, email, password, confirmPassword)) {
-                // Logic for user registration
+                // to home
+                //findNavController().navigate(R.id.)
+            }
+        })
+
+        binding.registerButton.setOnClickListener {
+
+
+            val model = UserModel(
+                binding.nameInput.text.toString(),
+                binding.emailInput.text.toString(),
+                binding.passwordInput.text.toString(),
+                binding.confirmPasswordInput.text.toString()
+            )
+            if (registerViewModel.validateFields(model)
+            ) {
+                if (!registerViewModel.isUserAlreadyRegistered(model.email)) {
+                    registerViewModel.registerUser(model.email, model.password)
+                } else {
+                    binding.emailInputLayout.error = getString(R.string.user_already_registered)
+                }
             }
         }
     }
 
-    private fun validateInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
-        var isValid = true
+    /*private fun setupFieldValidationListeners() {
+        val inputFieldNames = registerViewModel.userModel
 
+        binding.nameInput.doOnTextChanged { text, _, _, _ ->
+            registerViewModel.validateField(inputFieldNames.name, text.toString())
+        }
+
+        binding.emailInput.doOnTextChanged { text, _, _, _ ->
+            registerViewModel.validateField(inputFieldNames.email, text.toString())
+        }
+
+        binding.passwordInput.doOnTextChanged { text, _, _, _ ->
+            registerViewModel.validateField(inputFieldNames.password, text.toString())
+        }
+
+        binding.confirmPasswordInput.doOnTextChanged { text, _, _, _ ->
+            registerViewModel.validateField(
+                inputFieldNames.confirmPassword,
+                text.toString(),
+                binding.passwordInput.text.toString()
+            )
+        }
+    }*/
+
+    private fun displayValidationErrors(errors: Map<Errors, String>) {
         binding.nameInputLayout.error = null
         binding.emailInputLayout.error = null
         binding.passwordInputLayout.error = null
         binding.confirmPasswordInputLayout.error = null
 
-        // Name validation
-        if (name.isEmpty()) {
-            binding.nameInputLayout.error = "Name is required"
-            isValid = false
+        errors[Errors.NAME]?.let { binding.nameInputLayout.error = it }
+        errors[Errors.EMAIL]?.let { binding.emailInputLayout.error = it }
+        errors[Errors.PASSWORD]?.let { binding.passwordInputLayout.error = it }
+        errors[Errors.CONFIRM_PASSWORD]?.let {
+            binding.confirmPasswordInputLayout.error = it
         }
-
-        // Email validation
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.emailInputLayout.error = "Invalid email address"
-            isValid = false
-        }
-
-        // Password validation
-        if (password.length !in 6..12) {
-            binding.passwordInputLayout.error = "Password must be 6-12 characters"
-            isValid = false
-        }
-
-        // Confirm password validation
-        if (password != confirmPassword) {
-            binding.confirmPasswordInputLayout.error = "Passwords do not match"
-            isValid = false
-        }
-
-        return isValid
     }
 
     override fun onDestroyView() {
