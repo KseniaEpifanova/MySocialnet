@@ -59,6 +59,7 @@ class RegisterFragment : Fragment() {
             val model = UserModel(
                 binding.nameInput.text.toString(),
                 binding.emailInput.text.toString(),
+                binding.ageInput.text.toString().toInt(),
                 binding.passwordInput.text.toString(),
                 binding.confirmPasswordInput.text.toString()
             )

@@ -13,4 +13,5 @@
     <string name="invalid_email_or_password">Invalid email or password</string>
     <string name="user_already_registered">User already registered</string>
     <string name="failed_to_load_images">Failed to load images</string>
+    <string name="age">Age</string>
 </resources>

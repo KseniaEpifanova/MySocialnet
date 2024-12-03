@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mysocialnet.MySocialNetApp
 import com.example.mysocialnet.R
 import com.example.mysocialnet.databinding.FragmentLoginBinding
+import com.example.mysocialnet.utils.ValidationHelper
 import javax.inject.Inject
 
 class LoginFragment : Fragment() {
@@ -44,13 +45,14 @@ class LoginFragment : Fragment() {
             val email = binding.emailInput.text.toString()
             val password = binding.passwordInput.text.toString()
 
+            binding.emailInputLayout.error = ValidationHelper.validateEmail(email)
+            binding.passwordInputLayout.error = ValidationHelper.validatePassword(password)
+
             if (loginViewModel.validateInput(email, password)) {
-                loginViewModel.loginUser(email, password)
+                loginViewModel.loginUser()
                 if (loginViewModel.isAuthenticated.value == true) {
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 }
-            } else {
-                binding.emailInputLayout.error = getString(R.string.invalid_email_or_password)
             }
         }
 

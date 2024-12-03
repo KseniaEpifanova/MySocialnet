@@ -1,0 +1,91 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="image"
+            type="com.example.mysocialnet.models.Image" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_large">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                app:loadImageUrl="@{image.previewURL}" />
+
+            <TextView
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{image.displayImageSize}"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{image.type}"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{image.displayTags}"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                style="@style/HeaderStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{image.user}"
+                android:textSize="@dimen/text_size_large"
+                android:layout_marginTop="@dimen/margin_large" />
+
+            <TextView
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{"Likes: " + image.displayLikes}'
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{"Downloads: " + image.displayDownloads}'
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{"Comments: " + image.displayComments}'
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{"Favorites: " + image.displayFavorites}'
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{"Views: " + image.displayViews}'
+                android:textSize="@dimen/text_size_normal" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

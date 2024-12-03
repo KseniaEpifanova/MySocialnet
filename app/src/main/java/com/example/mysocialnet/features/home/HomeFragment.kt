@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mysocialnet.MySocialNetApp
-import com.example.mysocialnet.R
 import com.example.mysocialnet.databinding.FragmentHomeBinding
 import javax.inject.Inject
 
@@ -53,10 +52,8 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         imageListAdapter = ImageListAdapter { image ->
-            //val action = HomeFragmentDirections.actionHomeFragmentToImageDetailFragment(image)
-           // findNavController().navigate(action)
-            //findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
-
+            val action = HomeFragmentDirections.actionHomeFragmentToImageDetailsFragment(image)
+            findNavController().navigate(action)
         }
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)

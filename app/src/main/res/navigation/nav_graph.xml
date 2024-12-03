@@ -30,5 +30,17 @@
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+         <action
+            android:id="@+id/action_homeFragment_to_imageDetailsFragment"
+            app:destination="@id/imageDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/imageDetailsFragment"
+        android:name="com.example.mysocialnet.features.details.ImageDetailsFragment"
+        android:label="Image Details" >
+        <argument
+            android:name="image"
+            app:argType="com.example.mysocialnet.models.Image" />
     </fragment>
 </navigation>
