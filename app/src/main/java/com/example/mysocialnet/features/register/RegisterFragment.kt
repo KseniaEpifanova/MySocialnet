@@ -74,30 +74,6 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    /*private fun setupFieldValidationListeners() {
-        val inputFieldNames = registerViewModel.userModel
-
-        binding.nameInput.doOnTextChanged { text, _, _, _ ->
-            registerViewModel.validateField(inputFieldNames.name, text.toString())
-        }
-
-        binding.emailInput.doOnTextChanged { text, _, _, _ ->
-            registerViewModel.validateField(inputFieldNames.email, text.toString())
-        }
-
-        binding.passwordInput.doOnTextChanged { text, _, _, _ ->
-            registerViewModel.validateField(inputFieldNames.password, text.toString())
-        }
-
-        binding.confirmPasswordInput.doOnTextChanged { text, _, _, _ ->
-            registerViewModel.validateField(
-                inputFieldNames.confirmPassword,
-                text.toString(),
-                binding.passwordInput.text.toString()
-            )
-        }
-    }*/
-
     private fun displayValidationErrors(errors: Map<Errors, String>) {
         binding.nameInputLayout.error = null
         binding.emailInputLayout.error = null
