@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.mysocialnet.MySocialNetApp
 import com.example.mysocialnet.R
 import com.example.mysocialnet.databinding.FragmentRegisterBinding
@@ -34,7 +35,7 @@ class RegisterFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (requireActivity().application as MySocialNetApp).dispatchingAndroidInjector.inject(this)//.appComponent.inject(this)
+        (requireActivity().application as MySocialNetApp).dispatchingAndroidInjector.inject(this)
 
         registerViewModel =
             ViewModelProvider(this, viewModelInjectionFactory).get(RegisterViewModel::class.java)
@@ -48,9 +49,7 @@ class RegisterFragment : Fragment() {
         })
         registerViewModel.isRegistered.observe(viewLifecycleOwner, Observer { isRegistered ->
             if (isRegistered) {
-
-                // to home
-                //findNavController().navigate(R.id.)
+                findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
             }
         })
 

@@ -8,6 +8,7 @@ import com.example.mysocialnet.di.modules.FragmentModule
 import com.example.mysocialnet.di.modules.NetworkModule
 import com.example.mysocialnet.di.modules.ServiceModule
 import com.example.mysocialnet.di.modules.ViewModelModule
+import com.example.mysocialnet.features.home.HomeViewModel
 import com.example.mysocialnet.features.login.LoginViewModel
 import com.example.mysocialnet.features.register.RegisterViewModel
 import dagger.BindsInstance
@@ -40,6 +41,8 @@ interface AppComponent {
 
     fun app(): Application
 
-    fun inject(loginViewModel: LoginViewModel)
-    fun inject(registerViewModel: RegisterViewModel)
+    fun injectLoginViewModel(loginViewModel: LoginViewModel)
+    fun injectRegisterViewModel(registerViewModel: RegisterViewModel)
+    fun injectHomeViewModel(homeViewModel: HomeViewModel)
+
 }
