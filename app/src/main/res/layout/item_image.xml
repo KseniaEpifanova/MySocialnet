@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="image"
             type="com.example.mysocialnet.models.Image" />
@@ -12,25 +13,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/margin_large">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageThumbnail"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:loadImageUrl="@{image.previewURL}"
-            tools:srcCompat="@drawable/user_circle" />
-
-        <TextView
-            android:id="@+id/uploaderName"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:text="@{image.user}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="Uploader Name" />
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_large">
+
+            <ImageView
+                android:id="@+id/imageThumbnail"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                app:loadImageUrl="@{image.previewURL}"
+                android:layout_weight="1"
+                tools:srcCompat="@drawable/user_circle" />
+
+            <TextView
+                style="@style/HeaderStyle"
+                android:id="@+id/uploaderName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:text="@{image.user}"
+                android:layout_weight="2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                tools:text="Uploader Name" />
+
+        </LinearLayout>
 
         <View
             android:id="@+id/underline"

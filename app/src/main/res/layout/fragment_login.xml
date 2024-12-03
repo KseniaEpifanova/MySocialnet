@@ -45,7 +45,7 @@
             android:id="@+id/passwordInputLayout"
             android:layout_width="@dimen/margin_zero"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_large"
             android:hint="@string/password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

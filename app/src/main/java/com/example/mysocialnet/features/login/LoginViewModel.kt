@@ -17,7 +17,7 @@ class LoginViewModel @Inject constructor(private val sharedPrefsHelper: SharedPr
         "test@example.com" to "password123"
     )
 
-    fun loginUser(email: String, password: String) {
+    fun loginUser() {
         _isAuthenticated.value = true
         sharedPrefsHelper.setLoggedIn(true)
     }

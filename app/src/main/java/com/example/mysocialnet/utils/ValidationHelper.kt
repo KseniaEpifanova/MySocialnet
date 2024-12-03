@@ -29,6 +29,16 @@ object ValidationHelper {
         return if (password != confirmPassword) "Passwords do not match" else null
     }
 
+    fun validateAge(age: Int?): String? {
+
+        return when {
+            age == null -> "Please enter a valid age."
+            age < 18 -> "The age must be at least 18 years old."
+            age > 99 -> "The age must be at most 99 years old."
+            else -> null
+        }
+    }
+
     fun validateInputs(
         userModel: UserModel
     ): Map<Errors, String> {
@@ -40,6 +50,10 @@ object ValidationHelper {
 
         userModel.email?.let {
             validateEmail(it)?.let { error -> errors[Errors.EMAIL] = error }
+        }
+
+        userModel.age?.let {
+            validateAge(it)?.let { error -> errors[Errors.AGE] = error }
         }
 
         userModel.password?.let {
@@ -60,6 +74,7 @@ object ValidationHelper {
 enum class Errors{
     NAME,
     EMAIL,
+    AGE,
     PASSWORD,
     CONFIRM_PASSWORD
 }
