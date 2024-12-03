@@ -39,7 +39,7 @@ class RegisterViewModel@Inject constructor(private val sharedPrefsHelper: Shared
         if (!email.isNullOrEmpty() && !password.isNullOrEmpty()) {
             userDatabase[email] = password
             _isRegistered.value = true
-            sharedPrefsHelper.setAuthenticated(true)
+            sharedPrefsHelper.setLoggedIn(true)
         } else {
             _isRegistered.value = false
         }

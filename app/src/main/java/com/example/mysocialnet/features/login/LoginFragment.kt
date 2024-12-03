@@ -32,10 +32,9 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         (requireActivity().application as MySocialNetApp).dispatchingAndroidInjector.inject(this)
-
-        loginViewModel = ViewModelProvider(this, viewModelInjectionFactory).get(LoginViewModel::class.java)
+        loginViewModel =
+            ViewModelProvider(this, viewModelInjectionFactory)[LoginViewModel::class.java]
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,23 +44,19 @@ class LoginFragment : Fragment() {
             val email = binding.emailInput.text.toString()
             val password = binding.passwordInput.text.toString()
 
-            if (validateInput(email, password)) {
+            if (loginViewModel.validateInput(email, password)) {
                 loginViewModel.loginUser(email, password)
                 if (loginViewModel.isAuthenticated.value == true) {
-                    // Navigate to home screen
-                } else {
-                    binding.emailInputLayout.error = getString(R.string.invalid_email_or_password)
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 }
+            } else {
+                binding.emailInputLayout.error = getString(R.string.invalid_email_or_password)
             }
         }
 
         binding.registerTextView.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
-    }
-
-    private fun validateInput(email: String, password: String): Boolean {
-        return email.isNotEmpty() && password.isNotEmpty()
     }
 
     override fun onDestroyView() {
