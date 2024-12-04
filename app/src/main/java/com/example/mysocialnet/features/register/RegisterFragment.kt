@@ -75,11 +75,13 @@ class RegisterFragment : Fragment() {
     private fun displayValidationErrors(errors: Map<Errors, String>) {
         binding.nameInputLayout.error = null
         binding.emailInputLayout.error = null
+        binding.ageInputLayout.error = null
         binding.passwordInputLayout.error = null
         binding.confirmPasswordInputLayout.error = null
 
         errors[Errors.NAME]?.let { binding.nameInputLayout.error = it }
         errors[Errors.EMAIL]?.let { binding.emailInputLayout.error = it }
+        errors[Errors.AGE]?.let { binding.ageInputLayout.error = it }
         errors[Errors.PASSWORD]?.let { binding.passwordInputLayout.error = it }
         errors[Errors.CONFIRM_PASSWORD]?.let {
             binding.confirmPasswordInputLayout.error = it
