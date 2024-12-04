@@ -19,7 +19,6 @@ class MySocialNetApp : MultiDexApplication(), HasAndroidInjector, LifecycleObser
 
         AppInjector.init(this)
         appComponent = AppInjector.appComponent
-
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector

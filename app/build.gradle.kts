@@ -1,15 +1,20 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs")
+    id("io.realm.kotlin")
     id("org.jetbrains.kotlin.kapt")
 }
 
 android {
     namespace = "com.example.mysocialnet"
     compileSdk = 34
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 
     defaultConfig {
         applicationId = "com.example.mysocialnet"
@@ -21,6 +26,16 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = "17"
         }
     }
 
@@ -39,15 +54,8 @@ android {
         buildConfig = true
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
     kotlinOptions {
         jvmTarget = "17"
-    }
-    tasks.withType<org.gradle.api.tasks.JavaExec> {
-        enabled = false
     }
     packaging {
         resources {
@@ -90,6 +98,9 @@ dependencies {
     // Glide
     implementation("com.github.bumptech.glide:glide:4.13.2")
     kapt("com.github.bumptech.glide:compiler:4.13.2")
+
+    // Realm
+    implementation("io.realm.kotlin:library-base:1.13.0")
 
     // Test
     testImplementation("junit:junit:4.13.2")

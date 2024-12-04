@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -41,6 +42,10 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        loginViewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+        }
+
         binding.loginButton.setOnClickListener {
             val email = binding.emailInput.text.toString()
             val password = binding.passwordInput.text.toString()
@@ -49,9 +54,11 @@ class LoginFragment : Fragment() {
             binding.passwordInputLayout.error = ValidationHelper.validatePassword(password)
 
             if (loginViewModel.validateInput(email, password)) {
-                loginViewModel.loginUser()
+                loginViewModel.loginUser(email, password)
                 if (loginViewModel.isAuthenticated.value == true) {
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                } else{
+                    Toast.makeText(requireContext(), "Invalid credentials", Toast.LENGTH_SHORT).show()
                 }
             }
         }
