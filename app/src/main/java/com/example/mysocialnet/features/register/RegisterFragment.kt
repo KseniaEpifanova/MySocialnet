@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -44,18 +45,9 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        registerViewModel.fieldErrors.observe(viewLifecycleOwner, Observer { errors ->
-            displayValidationErrors(errors)
-        })
-        registerViewModel.isRegistered.observe(viewLifecycleOwner, Observer { isRegistered ->
-            if (isRegistered) {
-                findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
-            }
-        })
+        setupObservers()
 
         binding.registerButton.setOnClickListener {
-
-
             val model = UserModel(
                 binding.nameInput.text.toString(),
                 binding.emailInput.text.toString(),
@@ -63,15 +55,21 @@ class RegisterFragment : Fragment() {
                 binding.passwordInput.text.toString(),
                 binding.confirmPasswordInput.text.toString()
             )
-            if (registerViewModel.validateFields(model)
-            ) {
-                if (!registerViewModel.isUserAlreadyRegistered(model.email)) {
-                    registerViewModel.registerUser(model.email, model.password)
-                } else {
-                    binding.emailInputLayout.error = getString(R.string.user_already_registered)
-                }
+            if (registerViewModel.validateFields(model)) {
+                registerViewModel.registerUser(model.email, model.password)
+                findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
             }
         }
+    }
+
+    private fun setupObservers() {
+        registerViewModel.fieldErrors.observe(viewLifecycleOwner, Observer { errors ->
+            displayValidationErrors(errors)
+        })
+
+        registerViewModel.errorMessage.observe(viewLifecycleOwner, Observer { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun displayValidationErrors(errors: Map<Errors, String>) {

@@ -6,6 +6,7 @@ import com.example.mysocialnet.di.modules.ActivityModule
 import com.example.mysocialnet.di.modules.AppModule
 import com.example.mysocialnet.di.modules.FragmentModule
 import com.example.mysocialnet.di.modules.NetworkModule
+import com.example.mysocialnet.di.modules.RealmModule
 import com.example.mysocialnet.di.modules.ServiceModule
 import com.example.mysocialnet.di.modules.ViewModelModule
 import com.example.mysocialnet.features.home.HomeViewModel
@@ -25,7 +26,8 @@ import javax.inject.Singleton
         ActivityModule::class,
         FragmentModule::class,
         ServiceModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        RealmModule::class
     ]
 )
 interface AppComponent {
@@ -44,5 +46,4 @@ interface AppComponent {
     fun injectLoginViewModel(loginViewModel: LoginViewModel)
     fun injectRegisterViewModel(registerViewModel: RegisterViewModel)
     fun injectHomeViewModel(homeViewModel: HomeViewModel)
-
 }

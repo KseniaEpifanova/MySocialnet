@@ -3,45 +3,54 @@ package com.example.mysocialnet.features.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mysocialnet.utils.SharedPrefsHelper
+import androidx.lifecycle.viewModelScope
+import com.example.mysocialnet.models.db.UserDB
 import com.example.mysocialnet.utils.ValidationHelper
+import io.realm.kotlin.Realm
+import io.realm.kotlin.ext.query
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(private val sharedPrefsHelper: SharedPrefsHelper) :
+class LoginViewModel @Inject constructor(
+    private val realm: Realm
+) :
     ViewModel() {
 
     private val _isAuthenticated = MutableLiveData<Boolean>()
     val isAuthenticated: LiveData<Boolean> get() = _isAuthenticated
 
-    private val userDatabase = mutableMapOf(
-        "test@example.com" to "password123"
-    )
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> get() = _errorMessage
 
-    fun loginUser() {
-        _isAuthenticated.value = true
-        sharedPrefsHelper.setLoggedIn(true)
-    }
+    private suspend fun isUserExist(username: String, password: String): Boolean {
+        return withContext(Dispatchers.IO) {
+            val isDatabaseEmpty = realm.query<UserDB>().count().find() == 0L
 
-    // check later
-    /*fun loginUser(email: String, password: String) {
-        if (userDatabase[email] == password) {
-            _isAuthenticated.value = true
-            sharedPrefsHelper.setAuthenticated(true)
-        } else {
-            _isAuthenticated.value = false
+            if (isDatabaseEmpty) {
+                return@withContext false
+            }
+            val user = realm.query<UserDB>("username == $0 AND password == $1", username, password)
+                .first()
+                .find()
+            user != null
         }
-    }*/
-
-    fun checkAuthentication(): Boolean {
-        return sharedPrefsHelper.isLoggedIn()
     }
 
-    fun logout() {
-        _isAuthenticated.value = false
-        sharedPrefsHelper.setLoggedIn(false)
+    fun loginUser(email: String, password: String) {
+        viewModelScope.launch {
+            try {
+                val isAuthenticated = isUserExist(email, password)
+                _isAuthenticated.value = isAuthenticated
+            } catch (e: Exception) {
+                _errorMessage.value = e.message
+            }
+        }
     }
 
     fun validateInput(email: String, password: String): Boolean {
-        return ValidationHelper.validateEmail(email).isNullOrEmpty() && ValidationHelper.validatePassword(password).isNullOrEmpty()
+        return ValidationHelper.validateEmail(email)
+            .isNullOrEmpty() && ValidationHelper.validatePassword(password).isNullOrEmpty()
     }
 }
