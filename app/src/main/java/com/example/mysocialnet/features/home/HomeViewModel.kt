@@ -29,12 +29,12 @@ class HomeViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     val currentList = _imageList.value.orEmpty()
                     val newImages = response.body()?.hits.orEmpty()
-                    _imageList.value = currentList + newImages
+                    _imageList.postValue(currentList + newImages)
                 } else {
-                    _errorMessage.value = "Error: ${response.message()}"
+                    _errorMessage.postValue("Error: ${response.message()}")
                 }
             } catch (e: Exception) {
-                _errorMessage.value = "An error occurred: ${e.message}"
+                _errorMessage.postValue("An error occurred: ${e.message}")
             }
         }
     }

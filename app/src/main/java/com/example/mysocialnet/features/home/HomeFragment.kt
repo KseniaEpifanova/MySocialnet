@@ -74,15 +74,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        homeViewModel.imageList.observe(viewLifecycleOwner, Observer { images ->
+        homeViewModel.imageList.observe(viewLifecycleOwner) { images ->
             imageListAdapter.submitList(images)
             isLoading = false
-        })
+        }
 
-        homeViewModel.errorMessage.observe(viewLifecycleOwner, Observer { errorMessage ->
+        homeViewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
             binding.errorTextView.visibility = if (errorMessage != null) View.VISIBLE else View.GONE
             binding.errorTextView.text = errorMessage
-        })
+        }
     }
 
     private fun loadMoreImages() {
